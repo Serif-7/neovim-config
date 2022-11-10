@@ -92,8 +92,14 @@ require('packer').startup(function(use)
     require('Comment').setup()
   end
 }
--- Highlight, edit, and navigate code
-  use 'nvim-treesitter/nvim-treesitter'
+  -- Highlight, edit, and navigate code
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = function()
+      local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+      ts_update()
+    end,
+  }
 
 -- Additional textobjects for treesitter
   use 'nvim-treesitter/nvim-treesitter-textobjects'
@@ -309,7 +315,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'lua', 'typescript', 'rust', 'go', 'python' , 'javascript'},
+  ensure_installed = { 'lua', 'typescript', 'rust', 'go', 'python' , 'javascript', 'markdown', 'nix'},
 
   highlight = { enable = true },
   indent = { enable = true },
