@@ -14,6 +14,16 @@ require('packer').startup(function(use)
   -- package manager
   use 'wbthomason/packer.nvim'
 
+  use({
+    "kylechui/nvim-surround",
+    tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+    config = function()
+      require("nvim-surround").setup({
+        -- Configuration here, or leave empty to use defaults
+      })
+    end
+  })
+
   use {
     'phaazon/hop.nvim',
     branch = 'v2', -- optional but strongly recommended
@@ -52,12 +62,12 @@ require('packer').startup(function(use)
 }
 
   -- add lines to error messages
-  use({
+--[[   use({
   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
   config = function()
     require("lsp_lines").setup()
   end,
-})
+}) ]]
 
   -- highlight instances of the word under the cursor
   use 'RRethy/vim-illuminate'
@@ -463,7 +473,10 @@ require('lspconfig').sumneko_lua.setup {
       diagnostics = {
         globals = { 'vim' },
       },
-      workspace = { library = vim.api.nvim_get_runtime_file('', true) },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file('', true),
+        checkThirdParty = false
+      },
       -- Do not send telemetry data containing a randomized but unique identifier
       telemetry = { enable = false, },
     },
